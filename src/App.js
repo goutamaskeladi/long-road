@@ -5,6 +5,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			searchField: '',
 			users: []
 		};
 	}
@@ -15,8 +16,22 @@ class App extends Component {
 	}
 	render() {
 		return (
-			<div className="container">
-				{this.state.users.length > 0 ? <CardList users={this.state.users} /> : <p>Loading, please wait...</p>}
+			<div className="app">
+				<input
+					type="search"
+					placeholder="Search for users"
+					onChange={(e) =>
+						this.setState({ searchField: e.target.value }, () => {
+							console.log(this.state);
+						})}
+				/>
+				<div className="container">
+					{this.state.users.length > 0 ? (
+						<CardList users={this.state.users} />
+					) : (
+						<p>Loading, please wait...</p>
+					)}
+				</div>
 			</div>
 		);
 	}
