@@ -15,6 +15,8 @@ class App extends Component {
 			.then((users) => this.setState({ users }));
 	}
 	render() {
+		const { searchField, users } = this.state;
+		const filtedUsers = users.filter((item) => item.name.toLowerCase().includes(searchField.toLowerCase()));
 		return (
 			<div className="app">
 				<input
@@ -27,7 +29,7 @@ class App extends Component {
 				/>
 				<div className="container">
 					{this.state.users.length > 0 ? (
-						<CardList users={this.state.users} />
+						<CardList users={filtedUsers.length > 0 ? filtedUsers : this.state.users} />
 					) : (
 						<p>Loading, please wait...</p>
 					)}
