@@ -20,8 +20,3 @@ code {
 	margin: 0 auto;
 	grid-gap: 1rem;
 }
-
-input[type="search"] {
-	display: block;
-	margin: 1rem auto;
-}
