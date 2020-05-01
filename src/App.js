@@ -5,7 +5,7 @@ import ShopPage from './pages/shop/shop.component';
 import SignInUp from './pages/sign-in-up/sign-in-up.component';
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { setCurrentUser } from './redux/user/user.actions';
 import './App.scss';
 
@@ -35,18 +35,19 @@ class App extends Component {
 	}
 
 	render() {
+		const { currentUser } = this.props;
 		return (
 			<div className="App">
 				<Header />
-				{this.props.currentUser ? (
+				{currentUser ? (
 					<span className="welcome-message">
-						Welcome <strong>{this.props.currentUser.displayName}</strong>
+						Welcome <strong>{currentUser.displayName}</strong>
 					</span>
 				) : null}
 				<Switch>
 					<Route exact path="/" component={HomePage} />
 					<Route exact path="/shop" component={ShopPage} />
-					<Route exact path="/signin" component={SignInUp} />
+					<Route exact path="/signin" render={() => (currentUser ? <Redirect to="/" /> : <SignInUp />)} />
 				</Switch>
 			</div>
 		);
